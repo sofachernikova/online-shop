@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {%block title%}Профиль{%endblock%}
+{%block nav_links%} {%for cat in cats%}
+<p class="block__item">
+    <a href='/category/{{cat.id}}' class="block__link main-text">{{cat.title}}</a>
+</p>
+{%endfor%} {%endblock nav_links%}
+{% block content %}
+{{user}}:<br>
+{%for order in orders%}
+<a href="/orders/{{order.id}}">Заказ №{{order.id}} - {{order.status}}</a><br>
+{%endfor%}
+{% endblock %}

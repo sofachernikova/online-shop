@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {%block title%}Зарегистрироваться{%endblock%}
+{%block nav_links%} {%for cat in cats%}
+<p class="block__item">
+    <a href='/category/{{cat.id}}' class="block__link main-text">{{cat.title}}</a>
+</p>
+{%endfor%} {%endblock nav_links%}
+{% block content %}
+    <h1>Регистрация</h1>
+    <p>Используйте следующую форму для регистрации:</p>
+    <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="little-button-cart subtitle">Зарегистрироваться</button>
+    </form>
+    <a href="/login/">Войти</a>
+{% endblock %}

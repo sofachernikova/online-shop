@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {%block title%}Корзина{%endblock%}
+{%block nav_links%} {%for cat in cats%}
+<p class="block__item">
+    <a href='/category/{{cat.id}}' class="block__link main-text">{{cat.title}}</a>
+</p>
+{%endfor%} {%endblock nav_links%}
+{% block content %}
+<h1>Корзина</h1>
+{% if products_in_basket %}
+{%for product in products_in_basket%}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100px; flex-direction: column;">
+    <h1><a href="/products/{{product.id}}">{{product.title}}</a></h1>
+    <p>{{product.description}}</p>
+    <p>{{product.price}} P</p>
+    <p>{{product.article}}</p>
+    <img width="400px"  src="/media/{{product.image}}" alt="{{product.title}}">
+    <div style="display: flex; flex-direction: row; min-width: 150px; justify-content:space-evenly">
+    <form action="/basket/remove-item/{{product.id}}" method="POST">{%csrf_token%}<button type="submit" class="little-button-cart subtitle">Удалить</button></form>
+</div>
+</div>
+{%endfor%}
+Итоговая сумма: {{total_cost}}
+{% if user.is_authenticated %}
+<form action="." method="post">{% csrf_token %}<button type="submit" class="little-button-cart subtitle">Заказать</button></form>
+{%endif%}
+{%else%}
+<div>Перейдите в каталог</div>
+{%endif%}
+{% endblock %}

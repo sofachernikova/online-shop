@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {%block title%}Заказ №{{order.id}}{%endblock%}
+{%block nav_links%} {%for cat in cats%}
+<p class="block__item">
+    <a href='/category/{{cat.id}}' class="block__link main-text">{{cat.title}}</a>
+</p>
+{%endfor%} {%endblock nav_links%}
+{% block content %}
+<h1>Заказ №{{order.id}}</h1>
+<h2>Информация о заказе</h2>
+<h3>Состав заказа</h3>
+<ul>
+{%for product in products%}
+<li>{{product.title}}</li>
+{%endfor%}
+</ul>
+<br>
+Итоговый чек: {{order.total}}<br>
+Статус: {{order.status}}
+{% endblock %}

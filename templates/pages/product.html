@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {%block title%}{{product.title}}{%endblock%}
+{%block nav_links%} {%for cat in cats%}
+<p class="block__item">
+    <a href='/category/{{cat.id}}' class="block__link main-text">{{cat.title}}</a>
+</p>
+{%endfor%} {%endblock nav_links%}
+{% block content%}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100px; flex-direction: column;">
+    <h1>{{product.title}}</h1>
+    <p>{{product.description}}</p>
+    <div>
+        {%for cat in product_cats%}
+            <a href='/category/{{cat.id}}'>{{cat.title}}</a>
+        {%endfor%}
+    </div>
+    <p>{{product.price}} P</p>
+    <p>{{product.article}}</p>
+    <img width="400px"  src="/media/{{product.image}}" alt="{{product.title}}">
+    <a href="/sellers/{{product.seller.id}}">{{product.seller}}</a>
+    <div style="display:flex;">
+    {% for index in product.get_total_rating %}
+        <img src='/static/svg/star.svg' alt='' />
+    {%endfor%}
+</div>
+    <form action="/basket/add/{{product.id}}" method="POST">
+        {%csrf_token%}
+        <button class="little-button-cart subtitle">
+            В корзину
+        </button>
+    </form>
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="little-button-cart subtitle">Оставить голос</button>
+    </form>
+</div>
+<div>
+{%for rating in ratings%}
+<div style="display: flex; flex-direction: column">
+<span>
+{{rating.creator}} -
+{% for index in product.get_total_rating %}
+<img src='/static/svg/star.svg' alt='' />
+{%endfor%}
+</span>
+<h3>{{rating.title}}</h3>
+<textarea readonly rows="10" cols="5">{{rating.text}}</textarea>
+</div>
+{%endfor%}
+</div>
+{% endblock %}
